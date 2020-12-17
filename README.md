@@ -68,12 +68,14 @@ The data has been split into training and testing datasets assigning 70% and 30%
 
 We will test the trained models’ performances and select the one that has the best performance; it is based on f1-score
 ![F1score](/images/f1.png)
+
 *obtained from https://en.wikipedia.org/wiki/F-score*
 
 The reason to use this evaluation is due to an imbalance in class distribution that is present in the dataset. There is a small portion of users that have churn, and the purpose of this analysis is to identify the users that can churn Sparkify’s service correctly.
 
 Results:
 ![results](/images/results.png)
+
 *result of the models*
 
 ### Conclusions
