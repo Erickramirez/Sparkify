@@ -67,12 +67,12 @@ The data has been split into training and testing datasets assigning 70% and 30%
 **Model evaluation**
 
 We will test the trained models’ performances and select the one that has the best performance; it is based on f1-score
-![F1score][/images/f1.png]*obtained from https://en.wikipedia.org/wiki/F-score*
+![F1score](/images/f1.png)*obtained from https://en.wikipedia.org/wiki/F-score*
 
 The reason to use this evaluation is due to an imbalance in class distribution that is present in the dataset. There is a small portion of users that have churn, and the purpose of this analysis is to identify the users that can churn Sparkify’s service correctly.
 
 Results:
-![results][/images/results.png]*result of the models*
+![results](/images/results.png)*result of the models*
 
 ### Conclusions
 The model Machine learning and Spark allow processing large amounts of data; this is helpful for scalable analysis and can keep track of the users. Once we have identified the users with possible churn behavior, a good business strategy to reduce the churn will be AB/Test to evaluate and get more engagement from the users, and this will start with research about the current performance, then observe and formulate a hypothesis and define variations, for two groups (new incentive and a control group with the existing ones) and evaluate the new behavior.
