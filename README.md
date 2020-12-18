@@ -16,6 +16,17 @@ The environment needed for this project:
 5. [functools](https://docs.python.org/3/library/functools.html)
 6. [statsmodels](https://www.statsmodels.org/stable/index.html)
 
+### Explanation of the files in the repository
+1. Sparkify.ipynb: notebook file that contains all the process in which are explained in  the section **Steps performed**
+2. Sparkify.html: html version of the notebook: Sparkify.ipynb
+3. results.csv: sumary of results according to the models created and its evaluation related to execution time, accuracy and F1-score.
+4. images: folder that contains the images used in this file.
+  
+### Instructions to run the notebook
+1. clone the github repository: `git clone https://github.com/Erickramirez/Sparkify.git`
+2. verify the Prerequisites
+3. Open and run the file  file: Sparkify.ipynb
+
 ## What is customer churn?
 Is when a user stops using our company’s product, in this case, the Sparkify service. It is a metric that helps if the business is growing or not, and it is important because normally it costs more to acquire new customers than it does to retain the existing ones. To reduce customer churn, Sparkify has decided to analyze the data and offer incentives to keep the customers.
 
