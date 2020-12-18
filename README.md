@@ -47,8 +47,28 @@ spark = SparkSession \
         .getOrCreate()
 ```
 ### Steps performed
-**Load and Clean Dataset:** Remove data with mission UserIds, drop first name and last name
-**Exploratory Data Analysis:** exploratory data to check data distribution and features. Define Churn  as `Cancellation Confirmation` events and exploratory data analysis to observe the behavior for users who stayed vs users who churned. 
+**Load and Clean Dataset:** Remove data with mission UserIds, drop first name and last name.
+
+For the mini subset of data, it is a small dataset for Machine learning; it contains 286,500, there are missing userIds, normally the cookies are disabled, or we cannot track that specific user, then the data related to them has been removed. There are 225 unique users, which has the following distribution:
+![level](/images/level.png)
+
+*Customer count free/paid distribution by gender(F/M) and Churn (cancelled)*
+
+**Exploratory Data Analysis:** exploratory data to check data distribution and features. Define Churn  as `Cancellation Confirmation` events and exploratory data analysis to observe the behavior for users who stayed vs users who churned.
+23.11% of users have canceled the service, and the user interactions about the visit pages are the following:
+
+![level](/images/pages1.png)
+
+![level](/images/pages2.png)
+
+![level](/images/pages3.png)
+
+
+There is a small difference in behavior related to users who have churn and do not churn the service. `Thumbs Up` , `Thumps down` , and `Roll Advert` , however, there is still not a statistically significant difference to conclude. This evaluation of the box plot was performed to visualize the percentiles and mean to check distribution.
+To avoid overfitting for the model, we have removed the pages related to the account's cancelation, which means a churn.
+the behavior of the users related to the sessions (duration in hours and number of songs played)
+
+ 
 **Feature engineering:** actions performed:
 - Extract the necessary features from the smaller subset of data (final result at User level and not at event level)
 - Continue using spark for scale up, using the lazy evaluation in Apache Spark
@@ -61,12 +81,68 @@ The data will be present by userId
     - pages (remove Cancellation Confirmation and Cancel)
     - Browser (extracted from userAgent)
     - OS (extracted from userAgent)
+    
+    ![level](/images/categorical.png)
+    
+    *example of categorical feature labeled*
+
 2. Numerical Features (need to be scaled)
     - mean of songs in a session
     - mean of session duration (in hours)
     - mean of events (registers) in a session
     - days of use
     
+    ![level](/images/scaled.png)
+    
+    *example of numerical features scaled*
+    
+The final features to train are the following:
+```
+root
+ |-- userId: string (nullable = true)
+ |-- Churn: integer (nullable = true)
+ |-- level: integer (nullable = true)
+ |-- gender: integer (nullable = true)
+ |-- lenght_avg_scaled: double (nullable = true)
+ |-- day_of_week_1_scaled: double (nullable = true)
+ |-- day_of_week_2_scaled: double (nullable = true)
+ |-- day_of_week_3_scaled: double (nullable = true)
+ |-- day_of_week_4_scaled: double (nullable = true)
+ |-- day_of_week_5_scaled: double (nullable = true)
+ |-- day_of_week_6_scaled: double (nullable = true)
+ |-- day_of_week_7_scaled: double (nullable = true)
+ |-- songs_by_session_scaled: double (nullable = true)
+ |-- session_duration_scaled: double (nullable = true)
+ |-- event_count_by_session_scaled: double (nullable = true)
+ |-- total_sessions_scaled: double (nullable = true)
+ |-- browser_chrome: integer (nullable = true)
+ |-- browser_firefox: integer (nullable = true)
+ |-- browser_ie: integer (nullable = true)
+ |-- browser_mobile_safari: integer (nullable = true)
+ |-- browser_safari: integer (nullable = true)
+ |-- OS_linux: integer (nullable = true)
+ |-- OS_mac_os_x: integer (nullable = true)
+ |-- OS_ubuntu: integer (nullable = true)
+ |-- OS_windows: integer (nullable = true)
+ |-- OS_ios: integer (nullable = true)
+ |-- page_about_scaled: double (nullable = true)
+ |-- page_add_friend_scaled: double (nullable = true)
+ |-- page_add_to_playlist_scaled: double (nullable = true)
+ |-- page_downgrade_scaled: double (nullable = true)
+ |-- page_error_scaled: double (nullable = true)
+ |-- page_help_scaled: double (nullable = true)
+ |-- page_home_scaled: double (nullable = true)
+ |-- page_logout_scaled: double (nullable = true)
+ |-- page_nextsong_scaled: double (nullable = true)
+ |-- page_roll_advert_scaled: double (nullable = true)
+ |-- page_save_settings_scaled: double (nullable = true)
+ |-- page_settings_scaled: double (nullable = true)
+ |-- page_submit_downgrade_scaled: double (nullable = true)
+ |-- page_submit_upgrade_scaled: double (nullable = true)
+ |-- page_thumbs_down_scaled: double (nullable = true)
+ |-- page_thumbs_up_scaled: double (nullable = true)
+ |-- page_upgrade_scaled: double (nullable = true)
+```
 **Model building**
 
 The data has been split into training and testing datasets assigning 70% and 30%, respectively. The classifications used for this analysis are the following:
